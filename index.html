@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PageNest — personal reading tracker" />
+  <title>PageNest — Reading Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 5.5h4.5v13H4a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M8.5 4h4.5v14.5H8.5V4Z" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M13 6h4.2l2.2 11.8-4.2.8L13 6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <strong>PageNest</strong>
+          <span>Your reading, remembered.</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="themeBtn" class="action-btn theme-btn" type="button" aria-label="Change theme">
+          <span id="themeIcon">☀</span>
+          <span id="themeText">Light</span>
+        </button>
+        <button id="deleteModeBtn" class="action-btn delete-btn" type="button">
+          <span class="trash-symbol">🗑</span>
+          <span>Delete</span>
+        </button>
+        <button id="openAddBtn" class="action-btn add-btn" type="button">
+          <span class="plus-symbol">＋</span>
+          <span>Add Book</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="stats-grid">
+      <article class="stat-card stat-finished">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M6 3.5h9a2 2 0 0 1 2 2v13H8a2 2 0 0 1-2-2v-13Z" stroke="currentColor" stroke-width="1.8"/>
+            <path d="m9 10 2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="stat-copy">
+          <span>BOOKS FINISHED</span>
+          <strong id="finishedCount">0</strong>
+          <small>Keep going! You're doing great.</small>
+        </div>
+      </article>
+
+      <article class="stat-card stat-reading">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M3.5 5.5c3.1-.9 5.7-.5 8.5 1.5v12c-2.8-2-5.4-2.4-8.5-1.5v-12Z" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M20.5 5.5c-3.1-.9-5.7-.5-8.5 1.5v12c2.8-2 5.4-2.4 8.5-1.5v-12Z" stroke="currentColor" stroke-width="1.7"/>
+          </svg>
+        </div>
+        <div class="stat-copy">
+          <span>CURRENT BOOKS</span>
+          <strong id="readingCount">0</strong>
+          <small>Keep reading, keep growing.</small>
+        </div>
+      </article>
+
+      <article class="stat-card stat-all">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m5 6 7-2 7 2-7 2-7-2Zm0 5 7 2 7-2M5 16l7 2 7-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="stat-copy">
+          <span>ALL BOOKS</span>
+          <strong id="bookCount">0</strong>
+          <small>Your library, your journey.</small>
+        </div>
+      </article>
+    </section>
+
+    <section class="streak-panel">
+      <div class="streak-title">
+        <div class="flame">🔥</div>
+        <div>
+          <strong>READING STREAK</strong>
+          <span id="streakMessage">Read today to start your streak!</span>
+        </div>
+      </div>
+
+      <div id="weekTrack" class="week-track">
+        <div class="week-day" data-day="1"><span>Mon</span><i>✓</i></div>
+        <div class="week-day" data-day="2"><span>Tue</span><i>✓</i></div>
+        <div class="week-day" data-day="3"><span>Wed</span><i>✓</i></div>
+        <div class="week-day" data-day="4"><span>Thu</span><i>✓</i></div>
+        <div class="week-day" data-day="5"><span>Fri</span><i>✓</i></div>
+        <div class="week-day" data-day="6"><span>Sat</span><i>✓</i></div>
+        <div class="week-day" data-day="0"><span>Sun</span><i>✓</i></div>
+      </div>
+
+      <div class="streak-total">
+        <strong id="streakCount">0</strong>
+        <span>DAYS</span>
+        <small>Current streak</small>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="toolbar-left">
+        <label class="search-box">
+          <span>⌕</span>
+          <input id="librarySearch" type="search" placeholder="Search books..." />
+        </label>
+
+        <select id="statusFilter" class="select-control" aria-label="Filter books">
+          <option value="all">All Books</option>
+          <option value="reading">Currently Reading</option>
+          <option value="finished">Finished</option>
+        </select>
+
+        <select id="sortBooks" class="select-control" aria-label="Sort books">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="title">Title A–Z</option>
+          <option value="progress">Most Progress</option>
+        </select>
+      </div>
+
+      <div class="view-switch" role="group" aria-label="Library view">
+        <button id="gridViewBtn" class="view-btn active" type="button">
+          <span class="grid-icon">⊞</span> Grid
+        </button>
+        <button id="listViewBtn" class="view-btn" type="button">
+          <span class="list-icon">☷</span> List
+        </button>
+      </div>
+    </section>
+
+    <div id="deleteHint" class="delete-hint hidden">
+      <strong>Delete mode is active.</strong> Your books will shake. Press the red Delete badge on a book to remove it.
+    </div>
+
+    <section id="emptyState" class="empty-state hidden">
+      <div class="empty-library-icon">📚</div>
+      <h2>Your library is empty</h2>
+      <p>Add the first book you are reading and PageNest will remember your progress.</p>
+      <button id="emptyAddBtn" class="action-btn add-btn" type="button">＋ Add your first book</button>
+    </section>
+
+    <section id="bookGrid" class="book-grid"></section>
+
+    <footer>
+      <span>PageNest</span>
+      <p>Built By <strong>Jihed Benmahmoud</strong></p>
+    </footer>
+  </main>
+
+  <div id="bookModal" class="modal-backdrop hidden">
+    <section class="book-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <span id="modalEyebrow">ADD TO LIBRARY</span>
+          <h2 id="modalTitle">Add a new book</h2>
+        </div>
+        <button id="closeModalBtn" class="close-btn" type="button" aria-label="Close">×</button>
+      </div>
+
+      <div class="modal-search">
+        <div class="field title-field">
+          <label for="bookTitle">Book title</label>
+          <input id="bookTitle" type="text" placeholder="Quran, الداء والدواء, Atomic Habits..." />
+        </div>
+        <button id="findCoverBtn" class="find-cover-btn" type="button">⌕ Find cover</button>
+      </div>
+
+      <div id="searchStatus" class="search-status"></div>
+      <div id="coverResults" class="cover-results"></div>
+
+      <div class="form-layout">
+        <div class="cover-column">
+          <span class="field-label">Book cover</span>
+          <label id="coverDropzone" class="cover-dropzone" for="coverUpload">
+            <input id="coverUpload" type="file" accept="image/*" hidden />
+            <img id="coverPreview" alt="Book cover preview" />
+            <div class="cover-placeholder">
+              <span>＋</span>
+              <strong>Upload cover</strong>
+              <small>JPG, PNG or WEBP</small>
+            </div>
+          </label>
+          <button id="removeCoverBtn" class="remove-cover hidden" type="button">Remove cover</button>
+        </div>
+
+        <div class="form-fields">
+          <div class="field">
+            <label for="bookAuthor">Author</label>
+            <input id="bookAuthor" type="text" placeholder="Author name (optional)" />
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="currentPage">Last page read</label>
+              <input id="currentPage" type="number" min="0" placeholder="180" />
+            </div>
+            <div class="field">
+              <label for="totalPages">Total pages</label>
+              <input id="totalPages" type="number" min="1" placeholder="296" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="bookStatus">Reading status</label>
+            <select id="bookStatus">
+              <option value="reading">Currently reading</option>
+              <option value="finished">Finished</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="bookNote">Note (optional)</label>
+            <textarea id="bookNote" rows="3" maxlength="180" placeholder="Anything you want to remember..."></textarea>
+          </div>
+
+          <button id="saveBookBtn" class="save-book-btn" type="button">＋ Add Book</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="deleteModal" class="modal-backdrop hidden">
+    <section class="confirm-modal" role="dialog" aria-modal="true">
+      <div class="confirm-icon">🗑</div>
+      <h2>Delete this book?</h2>
+      <p id="deleteBookTitle"></p>
+      <div class="confirm-actions">
+        <button id="cancelDeleteBtn" type="button">Cancel</button>
+        <button id="confirmDeleteBtn" class="confirm-delete" type="button">Delete Book</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
